@@ -1,6 +1,17 @@
-import React from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const SkillHome = () => {
+  const [skills, setSkills] = useState([]);
+
+  useEffect(() => {
+    const getSkills = async () => {
+      const apiSkills = await axios.get("http://localhost:8000/api/v1/skills/");
+      setSkills(apiSkills.data.data);
+    };
+    getSkills();
+  }, []);
   return (
     <div className="max-w-3xl mx-auto">
       <div className="py-4 bg-slate-100">
@@ -31,101 +42,27 @@ const SkillHome = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4">Silver</td>
-
-              <td className="px-6 py-4">$2999</td>
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+            {skills.map((skill) => (
+              <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Microsoft Surface Pro
-              </th>
-              <td className="px-6 py-4">White</td>
-              <td className="px-6 py-4">Laptop PC</td>
+                  {skill.id}
+                </th>
+                <td className="px-6 py-4">{skill.name}</td>
 
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Magic Mouse 2
-              </th>
-              <td className="px-6 py-4">Black</td>
-              <td className="px-6 py-4">Accessories</td>
-
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Google Pixel Phone
-              </th>
-              <td className="px-6 py-4">Gray</td>
-              <td className="px-6 py-4">Phone</td>
-
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <th
-                scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Apple Watch 5
-              </th>
-              <td className="px-6 py-4">Red</td>
-              <td className="px-6 py-4">Wearables</td>
-
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                >
-                  Edit
-                </a>
-              </td>
-            </tr>
+                <td className="px-6 py-4">{skill.slug}</td>
+                <td className="px-6 py-4">
+                  <Link
+                    to="`/skills/edit/${skill.id}`"
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
+                    Edit
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class SkillController extends Controller
 {
     public function index(){
-        $skillWithPaginate = Skill::paginate(2);
+        $skillWithPaginate = Skill::all();
         $skills = SkillResource::collection($skillWithPaginate);
         return response()->json([
             'status' => true,
