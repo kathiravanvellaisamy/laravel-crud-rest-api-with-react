@@ -1,11 +1,24 @@
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import SkillHome from "./pages/skills/SkillHome";
+import ShowSkill from "./pages/skills/ShowSkill";
+import CraeteSkill from "./pages/skills/CraeteSkill";
+import EditSkill from "./pages/skills/EditSkill";
+import Header from "./components/Header";
+
 function App() {
   return (
     <>
-      <div className="my-3 px-8 ">
-        <h1 className="py-3 text-8xl font-extralight text-slate-700">
-          Hi React And Laravel
-        </h1>
-      </div>
+      <Header />
+      <main className="max-w-5xl border border-slate-400 rounded-md mx-auto px-8 py-4 min-h-screen my-5 bg-white">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/skills" element={<SkillHome />} />
+          <Route path="/skills/:id" element={<ShowSkill />} />
+          <Route path="/skills/create" element={<CraeteSkill />} />
+          <Route path="skills/edit/:id" element={<EditSkill />} />
+        </Routes>
+      </main>
     </>
   );
 }
